@@ -30,7 +30,7 @@ jobs:
             file: ./Dockerfile
             platforms: linux/amd64
             push: true
-            tags: [이미지명]:[태그] # <- 수정 요망
+            tags: 이미지명:태그 # <- 수정 요망
 
     - 
         name: SSH Remote Commands
