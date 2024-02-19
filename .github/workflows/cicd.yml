@@ -41,7 +41,6 @@ jobs:
             port: 22
             timeout: 40s  # 30초 기본        
             script: |
-                docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
                 docker pull geunsam2/cicd-example:latest
                 docker rm -f cicd-example
-                docker run -d -p 80:8000 --name cicd-example geunsam2/cicd-example:latest
+                docker run -d -p 41000:8000 --name cicd-example geunsam2/cicd-example:latest
