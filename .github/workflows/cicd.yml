@@ -30,7 +30,7 @@ jobs:
             file: ./Dockerfile
             platforms: linux/amd64
             push: true
-            tags: [이미지명]:[태그] # <- 수정 요망
+            tags: geunsam2/cicd-example:latest
 
     - 
         name: SSH Remote Commands
@@ -42,6 +42,6 @@ jobs:
             port: 22
             timeout: 40s  # 30초 기본        
             script: |
-                docker pull [이미지명]:[태그] # <- 수정 요망
-                docker rm -f [컨테이너명]  # <- 수정 요망
-                docker run -d -p [사용할 포트]:8000 --name [컨테이너명] [이미지명]:[태그] # <- 수정 요망
+                docker pull geunsam2/cicd-example:latest
+                docker rm -f example-container
+                docker run -d -p 41000:8000 --name example-container geunsam2/cicd-example:latest
