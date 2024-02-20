@@ -1,47 +1,42 @@
 name: Build Image
 
 on:
-    push:
-        branches:
-            - 'main'
-    workflow_dispatch:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-    -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-    -
-        name: Login to DockerHub
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
-    -
-        name: Build Container Image
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build Container Image
         uses: docker/build-push-action@v4
         with:
-            context: .
-            file: ./Dockerfile
-            platforms: linux/amd64
-            push: true
-            tags: 이미지명:태그 # <- 수정 요망
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: burgom147/cicd
 
-    - 
-        name: SSH Remote Commands
-        uses: appleboy/ssh-action@v0.1.4        
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.1.4
         with:
-            host: mc.modutech.win         
-            username: ${{ secrets.SSH_USERNAME }}
-            password: ${{ secrets.SSH_PASSWORD }}
-            port: 22
-            timeout: 40s  # 30초 기본        
-            script: |
-                docker pull [이미지명]:[태그] # <- 수정 요망
-                docker rm -f [컨테이너명]  # <- 수정 요망
-                docker run -d -p [사용할 포트]:8000 --name [컨테이너명] [이미지명]:[태그] # <- 수정 요망
+          host: mc.modutech.win
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          timeout: 40s # 30초 기본
+          script: |
+            docker pull burgom147/cicd
+            docker rm -f cicd-malatang
+            docker run -d -p 40010:8000 --name container-malatang burgom147/cicd
