@@ -38,5 +38,5 @@ jobs:
           timeout: 40s # 30초 기본
           script: |
             docker pull burgom147/cicd
-            docker rm -f cicd-malatang
+            docker rm -f burgom147
             docker run -d -p 40010:8000 --name container-malatang burgom147/cicd
