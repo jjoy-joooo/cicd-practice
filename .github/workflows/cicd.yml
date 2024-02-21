@@ -29,14 +29,14 @@ jobs:
           tags: burgom147/cicd
 
       - name: SSH Remote Commands
-        uses: appleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@v0.1.9 # ssh 접속하는 오픈소스
         with:
-          host: mc.modutech.win
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          host: ${{ secrets.AWS_REMOTE_IP }}
+          username: ${{ secrets.AWS_REMOTE_USER }}
+          key: ${{ secrets.AWS_REMOTE_PRIVATE_KEY }}
           port: 22
           timeout: 40s # 30초 기본
           script: |
             docker pull burgom147/cicd
             docker rm -f burgom147
-            docker run -d -p 40010:8000 --name container-malatang burgom147/cicd
+            docker run -d -p 8000:8000 --name container-malatang burgom147/cicd
