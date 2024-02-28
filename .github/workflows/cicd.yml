@@ -26,7 +26,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: burgom147/cicd
+          tags: ${{ secrets.DOCKER_USERNAME }}/cicd
 
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.1.9 # ssh 접속하는 오픈소스
@@ -37,6 +37,6 @@ jobs:
           port: 22
           timeout: 40s # 30초 기본
           script: |
-            docker pull burgom147/cicd
-            docker rm -f burgom147
-            docker run -d -p 8000:8000 --name container-malatang burgom147/cicd
+            docker pull ${{ secrets.DOCKER_USERNAME }}/cicd
+            docker rm -f ${{ secrets.DOCKER_USERNAME }}
+            docker run -d -p 8000:8000 --name container-malatang ${{ secrets.DOCKER_USERNAME }}/cicd
