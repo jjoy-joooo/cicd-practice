@@ -38,6 +38,5 @@ jobs:
           timeout: 40s # 30초 기본
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/cicd
-            docker stop $(docker ps -a -q)
-            docker rm -f ${{ secrets.DOCKER_USERNAME }}
-            docker run -d -p 8000:8000 --name container-malatang ${{ secrets.DOCKER_USERNAME }}/cicd
+            docker rm -f container-web
+            docker run -d -p 8000:8000 --name container-web ${{ secrets.DOCKER_USERNAME }}/cicd
